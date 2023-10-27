@@ -15,9 +15,11 @@ class Elsi(CMakePackage):
 
     homepage = "https://wordpress.elsi-interchange.org/"
     url = "https://wordpress.elsi-interchange.org/wp-content/uploads/2019/03/elsi-2.2.1.tar.gz"
+    git = "https://gitlab.com/elsi_project/elsi_interface.git"
 
     license("BSD-3-Clause")
 
+    version("2.6.2", tag="v2.6.2", commit="cdb6f8e1cb370ec577043e097038516606f0d8af")
     version("2.2.1", sha256="5b4b2e8fa4b3b68131fe02cc1803a884039b89a1b1138af474af66453bec0b4d")
 
     # Variants (translation of cmake options)
@@ -64,6 +66,8 @@ class Elsi(CMakePackage):
         args += ["-DCMAKE_Fortran_COMPILER=" + self.spec["mpi"].mpifc]
         args += ["-DCMAKE_C_COMPILER=" + self.spec["mpi"].mpicc]
         args += ["-DCMAKE_CXX_COMPILER=" + self.spec["mpi"].mpicxx]
+        if "%gcc" in self.spec:
+            args += ["-DCMAKE_Fortran_FLAGS_RELEASE=-O2 -DNDEBUG"]
 
         # Handle the various variants
         if "-add_underscore" in self.spec:
