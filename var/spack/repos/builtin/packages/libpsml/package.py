@@ -27,6 +27,8 @@ class Libpsml(AutotoolsPackage):
     depends_on("libtool@2.4.2:", type="build")
     depends_on("m4", type="build")
     depends_on("xmlf90")
+    
+    build_directory = "spack-build"
 
     def configure_args(self):
         return ["--with-xmlf90=%s" % self.spec["xmlf90"].prefix]
